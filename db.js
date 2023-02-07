@@ -1,46 +1,26 @@
-const Pool = require('pg').Pool
-const { Sequelize } = require('sequelize')
-const pool = new Pool(
-  {
-    user: "postgres",
-    password: "swabhav",
-    database: "contact_app",
-    host: "127.0.0.1",
-    port: "5432"
-  }
-);
+const { Sequelize } = require("sequelize");
+const dbConfig = require("./config/db.config");
+const { isDev } = require("./config/env.config");
 
-const seq = new Sequelize("contact_app", "postgres", "swabhav", {
-  dialect: 'postgres', host: pool.host
-})
-async function auth() {
+const { database, username, password, dialect, host } = dbConfig;
+
+const sequelize = new Sequelize(database, username, password, {
+  define: {
+    underscored: true,
+  },
+  dialect,
+  host,
+  logging: msg => isDev?logger.debug(msg):logger.info(msg),
+});
+
+async function connectToDatabase() {
   try {
-    await seq.authenticate();
-    console.log('Connection has been established successfully.');
+    await sequelize.authenticate();
+    // await sequelize.sync({ alter: true })
+    console.log("Connection has been established successfully.");
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.log("Unable to connect to the database:", error);
   }
 }
-auth()
-
-class DataBase {
-  constructor() {
-    this.pool = pool
-  }
-  databaseConnect() {
-    if (!pool) {
-      pool = new Pool(
-        {
-          user: "postgres",
-          password: "root",
-          database: "mydb",
-          host: "localhost",
-          port: "5432"
-        }
-      );
-    }
-    return pool
-  }
-}
-
-module.exports = { DataBase }
+// export default connectToDatabase;
+module.exports =  { sequelize, connectToDatabase};

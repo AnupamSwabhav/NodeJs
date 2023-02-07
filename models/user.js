@@ -16,7 +16,7 @@ const {
     }
   }
   User.init({
-    id : DataTypes.UUID,
+    
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN,
