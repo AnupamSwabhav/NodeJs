@@ -1,13 +1,18 @@
-const User = require("../models/user.js");
+const db = require("../models")
+const { User } = require("../view/user")
 
 exports.addUser = async function (user) {
-
     try {
-        var users = User.create(user)
-        return users;
-    } catch (e) {
-        // Log Errors
-        console.log("er=============>",e)
-        throw Error('Error while database insert Users')
-    }
+        // managed transaction.
+        const result = await db.sequelize.transaction(async (transaction) => {
+    
+            console.log("inside service")
+          // add
+          await User.createUser(user, transaction)
+        })
+        console.log(result);
+      } catch (error) {
+        console.log("error =====>",error)
+        throw Error("while interserting data")
+      }
 }

@@ -4,13 +4,13 @@ const bodyParser = require("body-parser")
 const { AllUser } = require("./view/user")
 const { JWTToken } = require("./middleware/authentication")
 const connectToDatabase = require("./db")
-const PORT = 8084
+const PORT = 8085
 const app = express()
 app.use(bodyParser.json())
 
 app.use("/", userRoute)
 
-connectToDatabase()
+connectToDatabase.connectToDatabase()
 
 app.post('/login/:fName', (req, resp) => {
     console.log("inside login")

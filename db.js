@@ -3,18 +3,16 @@ const dbConfig = require("./config/db.config");
 const { isDev } = require("./config/env.config");
 
 const { database, username, password, dialect, host } = dbConfig;
-
-const sequelize = new Sequelize(database, username, password, {
-  define: {
-    underscored: true,
-  },
-  dialect,
-  host,
-  logging: msg => isDev?logger.debug(msg):logger.info(msg),
-});
+const sequelize = new Sequelize("contact_app", "postgres", "swabhav", {
+  dialect: 'postgres',
+  host: "localhost",
+  port: "5432",
+  logging: console.log,
+})
 
 async function connectToDatabase() {
   try {
+    console.log("sequalize =======>",sequelize)
     await sequelize.authenticate();
     // await sequelize.sync({ alter: true })
     console.log("Connection has been established successfully.");

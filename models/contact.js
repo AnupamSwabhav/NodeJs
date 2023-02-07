@@ -1,11 +1,7 @@
 'use strict';
-
-import Contact from '../view/contact';
-
 const {
   Model
 } = require('sequelize');
-const user = require('./user');
 module.exports = (sequelize, DataTypes) => {
   class Contact extends Model {
     /**
@@ -19,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Contact.init({
-    id: DataTypes.UUID,
     userId : {
         type : DataTypes.UUID,
         references : {
@@ -35,5 +30,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Contact;
 };
-
-export default Contact

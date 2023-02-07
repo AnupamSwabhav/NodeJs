@@ -2,16 +2,13 @@ const dotenv =  require("dotenv");
 dotenv.config();
 
 module.exports = {
-  PORT,
-  NODE_ENV,
-  DB_USER,
-  DB_PASSWORD,
-  DB_HOST,
-  DB_PORT,
-  DB_NAME,
-  BCRYPT_SALT_ROUND,
-  ACCESS_TOKEN_SECRET,
-  REFRESS_TOKEN_SECRET,
-} = process.env;
+  development: {
+    username: "postgres",
+    password: "swabhav",
+    database: "contact_app",
+    host: "localhost",
+    dialect: "postgres",
+  }
+}
 
-module.exports = isDev = NODE_ENV ? NODE_ENV === "development" : true;
+// module.exports = isDev = NODE_ENV ? NODE_ENV === "development" : true;
